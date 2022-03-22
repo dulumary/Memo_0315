@@ -29,6 +29,11 @@
 					<input type="text" class="form-control col-11 ml-3" id="titleInput" value="${post.subject }">
 				</div>
 				<textarea class="form-control mt-3" rows="5" id="contentInput">${post.content }</textarea>
+				
+				<c:if test="${not empty post.imagePath }" >
+				<img src="${post.imagePath }">
+				</c:if>
+				
 				<div class="d-flex justify-content-between mt-3">
 					<div>
 						<a href="/post/list_view" class="btn btn-info">목록으로</a>
