@@ -37,9 +37,9 @@
 				<div class="d-flex justify-content-between mt-3">
 					<div>
 						<a href="/post/list_view" class="btn btn-info">목록으로</a>
-						<button type="button" class="btn btn-danger" >삭제</button>
+						<button type="button" class="btn btn-danger" id="deleteBtn" data-post-id="${post.id }">삭제</button>
 					</div>
-					<button type="button" class="btn btn-success" id="saveBtn">수정</button>
+					<button type="button" class="btn btn-success" id="saveBtn" data-post-id="${post.id }">수정</button>
 				</div>
 			</div>
 		
@@ -48,6 +48,59 @@
 		<c:import url="/WEB-INF/jsp/include/footer.jsp" />
 	
 	</div>
+	
+	<script>
+		$(document).ready(function() {
+			$("#saveBtn").on("click", function() {
+				let title = $("#titleInput").val();
+				let content = $("#contentInput").val();
+				
+				let postId = $(this).data("post-id");
+				
+				$.ajax({
+					type:"post",
+					url:"/post/update",
+					data:{"postId":postId, "subject":title, "content":content},
+					success:function(data) {
+						
+						if(data.result == "success") {
+							alert("수정 성공");
+						} else {
+							alert("수정 실패");
+						}
+					},
+					error:function() {
+						alert("수정 에러");	
+					}
+				});
+				
+			});
+			
+			$("#deleteBtn").on("click", function() {
+				let postId = $(this).data("post-id");
+				
+				$.ajax({
+					type:"get",
+					url:"/post/delete",
+					data:{"postId":postId},
+					success:function(data) {
+						if(data.result == "success") {
+							location.href = "/post/list_view";
+						} else {
+							alert("삭제 실패");
+						}
+					}, 
+					error:function() {
+						alert("삭제 에러");
+					}
+				});
+				
+			});
+			
+		});
+	
+	
+	</script>
 
 </body>
 </html>

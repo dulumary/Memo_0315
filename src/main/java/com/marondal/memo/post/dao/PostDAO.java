@@ -19,4 +19,13 @@ public interface PostDAO {
 	public List<Post> selectPostList(@Param("userId") int userId);
 	
 	public Post selectPost(@Param("id") int id);
+	
+	public int updatePost(
+			@Param("postId") int postId,
+			@Param("subject") String subject,
+			@Param("content") String content);
+	
+	public int deletePost(
+			@Param("postId") int postId,
+			@Param("userId") int userId);
 }
